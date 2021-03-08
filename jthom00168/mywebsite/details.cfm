@@ -1,9 +1,4 @@
 <cfparam name="searchme" default="">
-<cfoutput>
-    select * from books
-    inner join publishers on books.publisher = publishers.id
-    where title like '%#trim(searchme)#%' or isbn13='#searchme#'
-</cfoutput>
 
 <cfquery name="bookinfo" datasource="#application.dsource#">
     select * from books
@@ -31,9 +26,12 @@
 <cffunction name="oneResult">
     <div>
     <cfoutput>
-        <img src="/CodeBase/week6/images/#bookinfo.image[1]#" style="float:left; width:250px; height:250px;">
+
+    <img src="/jthom00168/mywebsite/images/#bookinfo.image[1]#" style="float:left; width:250px;
+        height:250px;">
     <span>Title: #bookinfo.title[1]#</span><br/>
     <span>Publisher: #bookinfo.name[1]#</span>
+        <span>Description: #bookinfo.description[1]#</span>
     </cfoutput>
     </div>
 </cffunction>
