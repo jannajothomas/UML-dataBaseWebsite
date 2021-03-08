@@ -120,6 +120,20 @@
             </div>
             </div>
 
+<!--- Language --->
+                <div class="form-group row">
+                    <label for="language" class="col-sm-2 col-form-label">Language</label>
+                <div class="col-sm-10">
+                        <input  type="text"
+                                class="form-control"
+                                id="language"
+                                name="language"
+                                placeholder="Language"
+                        value="#thisBook.language[1]#"
+            /><br/>
+            </div>
+            </div>
+
 <!--- Publisher --->
                 <div class="form-group row">
                     <label for="publisher" class="col-sm-2 col-form-label">Publisher</label>
@@ -241,6 +255,7 @@
         year='#form.year#',
         isbn='#form.isbn#',
         pages='#form.pages#',
+        language='#form.language#',
         image='#form.uploadimage#',
         publisher='#form.publisher#',
         description='#form.description#'
