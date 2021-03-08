@@ -1,0 +1,102 @@
+/* CSS Document */
+/*#wrapper{border:thin solid black}
+#topHeader{font-size:24px; text-align:center}
+#footer{text-align:center; padding:5px; border-top:thin solid black}*/
+
+/*
+    color: #FF4F58FF;
+    background-color: #A89C94FF;
+ */
+
+body{
+    background-color: #A89C94FF;
+}
+
+#topHeader{
+    font-size:24px;
+    text-align:center;
+    color: #F0F6F7FF;
+    background-color: #669DB3FF;
+}
+
+#footer{
+    text-align:center;
+    padding:5px;
+    border-top:thin solid black;
+    color: #F0F6F7FF;
+    background-color: #669DB3FF;
+}
+
+#wrapper{
+    border:thin solid black;
+    background-color:#F0F6F7FF;
+}
+
+.flex-column li a{
+    color: #669DB3FF;
+}
+
+.flex-column li a:hover{
+    background-color: #A89C94FF;
+}
+
+/* Navbar styles */
+.navbar-inverse {
+    background-color: #A89C94FF;    /*nav bar background color*/
+    border-color:#A89C94FF;        /*nav bar outline color */
+    border-radius: 0;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #FF4F58FF;      /*normal text color on nav bar */
+}
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+    font-weight: bolder;
+    color: #A89C94FF;      /*Color of text when higlighted*/
+    background-color: #FF4F58FF;   /*Background Color when higlighted*/
+}
+
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+
+.navbar-inverse .navbar-nav > .disabled > a,
+.navbar-inverse .navbar-nav > .disabled > a:hover,
+.navbar-inverse .navbar-nav > .disabled > a:focus {
+    font-size: 150%;
+    font-weight: bold;
+    color: black;
+    background-color: #669DB3FF;
+}
+
+
+
+
+/* Next Item Style */
+.carousel-caption a{
+    color: black;
+}
+
+.carousel-caption {
+    position: relative;
+    left: 0;
+    top: 3%;
+}
+.carousel-indicator {
+    position: relative;
+   top:0;
+    color: teal;
+}
+
+.carousel-indicators .active{
+    background-color: orange;
+}
+.carousel-indicators li {
+    background-color: burlywood;
+}
+
+.item h3{
+    color: teal;
+    font-size: 265%;
+}
