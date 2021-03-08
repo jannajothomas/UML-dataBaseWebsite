@@ -216,7 +216,7 @@
                     </li>
                 </cfloop>
             <cfelse>
-                    No Search Term Entered (Try deluxe)
+                    No Search Term Entered (Try climb)
             </cfif>
             </ul>
         </cfoutput>
