@@ -216,7 +216,7 @@
                     </li>
                 </cfloop>
             <cfelse>
-                    No Search Term Entered (Try tough)
+                    No Search Term Entered (Try deluxe)
             </cfif>
             </ul>
         </cfoutput>
@@ -259,7 +259,7 @@
                 update books set
 
                 title='#form.title#',
-            image='#form.image#',
+                image='#form.image#',
                 description='#form.description#',
             publisher='#form.publisher#'
             where isbn13='#form.isbn13#'
