@@ -1,8 +1,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#myNav">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNav">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -12,7 +11,8 @@
                 <img src="../images/climbing.png"/>
             </a>
         </div>
-    <cfoutput>
+
+        <cfoutput>
         <div class="collapse navbar-collapse" id="myNav">
             <ul class="nav navbar-nav">
                 <li><a href="../index.cfm">Home</a></li>

@@ -13,30 +13,30 @@
 </head>
 
 <body>
-<cfparam name="p" default="carousel" />
-<div id="wrapper" class="container">
+    <cfparam name="p" default="carousel" />
+    <div id="wrapper" class="container">
+        <div id="topHeader" class="row">
+            <cfinclude template="header.cfm">
+        </div>
+        <div id="horizontalnav" class="row">
+            <cfinclude template="horizontalnav.cfm">
+        </div>
+        <div id="maincontent" class="row">
 
-<div id="topHeader" class="row">
-<cfinclude template="header.cfm">
-</div>
-<div id="horizontalnav" class="row">
-<cfinclude template="horizontalnav.cfm">
-</div>
-<div id="maincontent" class="row">
-<div id="center" class="col-sm-7 col-lg-7 col-md-7 col-sm-push-3">
-<cfinclude template="#p#.cfm">
-</div>
+            <div id="center" class="col-sm-7 col-lg-7 col-md-7 col-sm-push-3">
+            <cfinclude template="#p#.cfm">
+            </div>
 
-<div id="leftgutter" class="col-sm-3 col-lg-3 col-md-3 col-sm-pull-7">
-<cfinclude template="genrenav.cfm">
-</div>
-</div>
+            <div id="leftgutter" class="col-sm-3 col-lg-3 col-md-3 col-sm-pull-7">
+            <cfinclude template="genrenav.cfm">
+            </div>
+        </div>
 
-<div id="footer" class="row">
-<cfinclude template="footer.cfm">
-</div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+        <div id="footer" class="row">
+            <cfinclude template="footer.cfm">
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
-</body>
+    </body>
 </html>

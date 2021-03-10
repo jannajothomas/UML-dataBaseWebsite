@@ -2,13 +2,11 @@
     <html>
         <head>
             <meta charset="utf-8"> <title>Book Store Manager View</title>
-        <!--- Links to Bootstrap ....--->
+            <!--- Link to Bootstrap ....--->
             <link href="/CodeBase/includes/bootstrap/css/bootstrap.css" rel="stylesheet" />
-          <!--  <link href="../../includes/css/mycss.css" rel="stylesheet"/>  -->
         </head>
 
         <cfparam name="tool" default="addedit">
-
     <body>
         <div class="container">
             <div id="topHeader" class="row">
