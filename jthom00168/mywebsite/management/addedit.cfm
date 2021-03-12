@@ -24,7 +24,8 @@
 
 <!-- ----------------------------------Main Form------------------------------------------>
 <cffunction name="mainForm">
-    <cfif book neq ''> <!--If title isn't blank-->
+    <!--Decide if a book should be shown -->
+    <cfif book neq ''>
         <cfquery name="thisBook" datasource="#application.dsource#">
             select * from books where isbn13='#book#'
         </cfquery>
@@ -153,13 +154,16 @@
                 <div class="form-group row">
                     <label for="coverImage" class="col-sm-2 col-form-label">Cover</label>
                     <div class="col-sm-10">
-                        <cfif thisBook.image[1] neq "">
-                            <img src="../images/#trim(thisBook.image[1])#" height="150" alt="">
+                    <!--<input type="file" class="form-control" id="coverimage" name="uploadimage">-->
+                        <input type="file" name="uploadimage" class="col-sm-6"/>
+                        <input type="hidden" name="image" value="#trim(thisBook.image[1])#"/>
+                        <cfif thisBook.image[1] neq ''>
+                                <img  style="width:100px" src="/jthom00168/mywebsite/images/#trim(thisBook.image[1])#" alt="">
                         </cfif>
-                        <input type="file" class="form-control" id="coverimage" name="uploadimage"/>
-                        <input  type="hidden"
-                                name="image"
-                                value="#thisBook.image[1]#" />
+
+
+
+
                     </div>
                 </div>
 
@@ -246,7 +250,7 @@
                 isbn='#form.isbn#',
                 pages='#form.pages#',
                 language='#form.language#',
-                image='#form.uploadimage#',
+                image='#form.image#',
                 publisher='#form.publisher#',
                 description='#form.description#'
             where isbn13='#form.isbn13#'

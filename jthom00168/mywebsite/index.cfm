@@ -1,7 +1,7 @@
 
 
 <!doctype html>
-<html>
+<html lang="eng">
 <head>
     <title>Red Point Books Home</title>
 <!--- Links to Bootstrap and our custom CSS. You'll have /username/includes....--->
@@ -24,11 +24,11 @@
         <div id="maincontent" class="row">
 
             <div id="center" class="col-sm-7 col-lg-7 col-md-7 col-sm-push-3">
-            <cfinclude template="#p#.cfm">
+                <cfinclude template="#p#.cfm">
             </div>
 
             <div id="leftgutter" class="col-sm-3 col-lg-3 col-md-3 col-sm-pull-7">
-            <cfinclude template="genrenav.cfm">
+                <cfinclude template="genrenav.cfm">
             </div>
         </div>
 
