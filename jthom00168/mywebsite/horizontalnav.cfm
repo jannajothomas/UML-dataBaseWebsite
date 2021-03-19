@@ -31,9 +31,30 @@
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <!--<li><a>Login</a></li>-->
+
+        <cfoutput>
+            <cfif session.isloggedin>
+                <li><a>Welcome #session.user.firstname#</a></li>
+            <li><a href="#cgi.SCRIPT_NAME#?p=logoff ">logout</a></li>
+            <cfelse>
+                    <li><a href="#cgi.SCRIPT_NAME#?p=login">Login</a></li>
+            </cfif>
+            <cfif session.user.IsAdmin>
+                    <li><a href="management/index.cfm"><span class="glyphicon glyphicon-log-in"></span>Add/Edit</a></li>
+            </cfif>
+        </cfoutput>
+
+
+
+
+            <!---<li><a>Login</a></li>
             <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="management/index.cfm"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href=#cgi.script_name#?p=login"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+            <li>session.user.name</li>
+            <li><a href="management/index.cfm"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
+            <cfif session.user.isAdmin>
+                    <li><a href="management/index.cfm"><span class="glyphicon glyphicon-log-in"></span>Add/Edit</a></li>
+            </cfif>--->
         </ul>
     </div>
   </div>

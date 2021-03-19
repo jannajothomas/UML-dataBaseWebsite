@@ -21,6 +21,11 @@
         </cfoutput>
     </cfcatch>
 </cftry>
+<cfif session.user.IsAdmin neq 1>
+    <cflocation
+            url = "../index.cfm">
+</cfif>
+
 
 <!-- ----------------------------------Main Form------------------------------------------>
 <cffunction name="mainForm">
@@ -38,6 +43,8 @@
             <form action="#cgi.script_name#?tool=addedit" method="post" enctype="multipart/form-data" >
                 <input type="hidden" name="qterm" value="#qterm#" />
                 <div class="form-group row">
+
+                   <!---<cfif session.user.isadmin>--->
                     <label for="isbn13" class="col-sm-2 control-label">ISBN13</label>
                     <div class="col-sm-10">
                     <input type="text"
@@ -47,6 +54,7 @@
                            placeholder="ISBN13"
                     value="#thisBook.isbn13[1]#"/>
                     </div>
+                    <!---</cfif>--->
                 </div>
 
                 <!--- Title --->

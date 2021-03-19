@@ -14,6 +14,7 @@
 
 <body>
     <cfparam name="p" default="carousel" />
+    <cfinclude template="stateinfo.cfm" />
     <div id="wrapper" class="container">
         <div id="topHeader" class="row">
             <cfinclude template="header.cfm">

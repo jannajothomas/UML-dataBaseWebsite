@@ -16,7 +16,6 @@
         <div class="collapse navbar-collapse" id="myNav">
             <ul class="nav navbar-nav">
                 <li><a href="../index.cfm">Home</a></li>
-                <li><a href="#cgi.script_name#?tool=addedit"">Add/Edit</a></li>
                 <li><a href="#cgi.script_name#?tool=createuuids"">Create UUIDs</a></li>
             </ul>
         </div>
