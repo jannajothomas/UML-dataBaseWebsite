@@ -4,6 +4,7 @@
             <meta charset="utf-8"> <title>Book Store Manager View</title>
             <!--- Link to Bootstrap ....--->
             <link href="/CodeBase/includes/bootstrap/css/bootstrap.css" rel="stylesheet" />
+            <script src="/includes/ckeditor/ckeditor.js"></script>
         </head>
 
         <cfparam name="tool" default="addedit">

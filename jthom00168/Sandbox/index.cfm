@@ -1,172 +1,47 @@
+<!---
+layout: examples
+title: Cover Template
+extra_css:
+- "cover.css"
+body_class: "text-center"
+include_js: false
+--->
 
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <title>Untitled Document</title>
-    <link href="../includes/bootstrap/css/bootstrap.css" rel="stylesheet"/>
-    <link href="../includes/css/mycss.css" rel="stylesheet"/>
-    <script src="../includes/js/jQuery/jquery-1.11.3.min.js" type="text/javascript"></script>
-    <script src="../includes/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!-- This page css -->
+    <link href="/includes/cover.css" rel="stylesheet">
+    <title>Janna Thomas</title>
 </head>
-
 <body>
-<div id="wrapper" class="container">
-    <div id="topHeader" class="row">
-        Read These informative Books,please!
-
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <cfinclude template="header.cfm">
+        <cfinclude template="main.cfm">
+        <cfinclude template="footer.cfm">
     </div>
-    <div id="horizontalnav" class="row">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#readDeseNav">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.html">
-                        <img src="/../includes/classimages/rdb.png"/>
-                    </a>
-                </div>
-                <div class="collapse navbar-collapse" id="readDeseNav">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">Home</a></li>
-                        <li><a>Store Information</a></li>
-                        <li><a>Highlighted Favorites</a></li>
-                        <li><a>Events</a></li>
-                        <li>
-                            <form class="navbar-form navbar-left" role="search">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Search">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a>Login</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
 
-    </div>
-    <div id="maincontent" class="row">
-        <div id="center" class="col-sm-9 col-lg-9 col-md-9 col-sm-push-3">
-            <legend>Today's Children's Classics</legend>
-            <div id="readDeseCarousel" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#readDeseCarousel" data-slide-to="0" class="active"
-                        title="Anne of Green Gables"></li>
-                    <li data-target="#readDeseCarousel" data-slide-to="1" title="Amelia Bedelia"></li>
-                    <li data-target="#readDeseCarousel" data-slide-to="2" title="Encyclopedia Brown"></li>
-                    <li data-target="#readDeseCarousel" data-slide-to="3" title="Store Hours"></li>
-                </ol>
+    <!-- Optional JavaScript; choose one of the two! -->
 
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        <img src="../includes/classimages/AOGG.jpg" alt="..."
-                             style="margin-left:auto; margin-right:auto">
-                        <div class="carousel-caption">
-                            <a>Anne of Green Gables</a>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="../includes/classimages/AmeliaBedelia.jpg" alt="..."
-                             style="margin-left:auto; margin-right:auto">
-                        <div class="carousel-caption">
-                            <a href="">Amelia Bedelia</a>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="../includes/classimages/EncyclopediaBrown.jpg" alt="..."
-                             style="margin-left:auto; margin-right:auto">
-                        <div class="carousel-caption">
-                            <a href="">Encyclopedia Brown</a>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <h3 class="col-lg-offset-2">Store Hours</h3>
-                        <table class="table table-hover table-striped"
-                               style="width:65%; margin-left:auto;margin-right:auto">
-                            <tbody>
-                            <tr>
-                                <th>Day</th>
-                                <th>Hours</th>
-                            </tr>
-                            <tr>
-                                <td>Monday</td>
-                                <td>10am-6pm</td>
-                            </tr>
-                            <tr>
-                                <td>Tuesday</td>
-                                <td>10am-6pm</td>
-                            </tr>
-                            <tr>
-                                <td>Wednesday</td>
-                                <td>10am-6pm</td>
-                            </tr>
-                            <tr>
-                                <td>Thursday</td>
-                                <td>10am-6pm</td>
-                            </tr>
-                            <tr>
-                                <td>Friday</td>
-                                <td>10am-9pm</td>
-                            </tr>
-                            <tr>
-                                <td>Saturday</td>
-                                <td>10am-9pm</td>
-                            </tr>
-                            <tr>
-                                <td>Sunday</td>
-                                <td>Noon-6pm</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div class="carousel-caption">
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Controls -->
-                <a class="left carousel-control" href="#readDeseCarousel" role="button" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#readDeseCarousel" role="button" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-
-        </div>
-        <div id="leftgutter" class="col-sm-3 col-lg-3 col-md-3 col-sm-pull-9">
-            <ul class="nav nav-stacked">
-                <li><a>Childrens's Books</a></li>
-                <li><a>Mysteries</a></li>
-                <li><a>Non-Fiction</a></li>
-                <li><a>Self Help</a></li>
-                <li><a>Philosophy</a></li>
-                <li><a>Religion</a></li>
-                <li><a>Technology</a></li>
-            </ul>
-
-        </div>
-    </div>
-    <div id="footer" class="row">
-        Read Dese Books<br/>
-        1 University Way<br/>
-        Lowell, MA
-
-    </div>
-</div>
-</body>
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    -->
+    </body>
 </html>
+
+
 
