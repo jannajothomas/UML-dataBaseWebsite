@@ -31,6 +31,21 @@
 <cffunction name="mainForm">
     <!--Decide if a book should be shown -->
     <cfif book neq ''>
+
+        <!-- Query: allgenres : Select all the genres in Genres and order them by genre name-->
+        <cfquery name="allgenres" datasource="#application.dsource#">
+            select * from Genres order by 'genrename'
+        </cfquery>
+
+
+        <!-- Query: bookgenres : Selects all of the rows in GenresToBooks where bookid is the same as the
+        book that was submitted-->
+        <cfquery name="bookgenres" datasource="#application.dsource#">
+            select * from GenresToBooks where bookid='#book#'
+        </cfquery>
+
+
+
         <cfquery name="thisBook" datasource="#application.dsource#">
             select * from books where isbn13='#book#'
         </cfquery>
@@ -68,6 +83,28 @@
                                 placeholder="Book Title"
                                 value="#thisBook.title[1]#"
                         /><br/>
+                    </div>
+                </div>
+
+             <!--- Genres --->
+                <div class="form-group row">
+                    <label for="title" class="col-sm-2 col-form-label"> Genres </label>
+                    <div class="col-sm-10">
+                        <!--Loop over teh allgenres query-->
+                            <cfloop query="allgenres">
+                                <input  type="checkbox"
+                                        class="form-control"
+                                        id="Genre#genreid#"
+                                        name="genre"
+                                        placeholder="Book Title"
+                                        value="#genreid#"
+                                />#genrename#<br/>
+                            </cfloop>
+                        <!--Loop over the bookgenres query-->
+                        <cfloop query="bookgenres">
+                            <script>document.getElementById('Genre#genreid#').checked=true;</script>
+                        </cfloop>
+
                     </div>
                 </div>
 
@@ -166,11 +203,8 @@
                         <input type="file" name="uploadimage" class="col-sm-6"/>
                         <input type="hidden" name="image" value="#trim(thisBook.image[1])#"/>
                         <cfif thisBook.image[1] neq ''>
-                                <img  style="width:100px" src="/jthom00168/mywebsite/images/#trim(thisBook.image[1])#" alt="">
+                                <img  style="width:100px" src="/../images/#trim(thisBook.image[1])#" alt="">
                         </cfif>
-
-
-
 
                     </div>
                 </div>
@@ -277,6 +311,19 @@
                 set title='#form.title#', image='#form.image#', description='#form.description#',  publisher='#form.publisher#'
                 where isbn13='#form.isbn13#'
             </cfquery>
+
+<!--- Delete all the genres in the genrestobooks --->
+            <cfquery datasource="#application.dsource#">
+                delete from genrestobooks where bookid='#form.isbn13#'
+            </cfquery>
+            <cfoutput>
+<!--- Looop over all the submitted genres and insert each into the database --->
+                <cfloop list="#form.genre#" index="i">
+                    <cfquery name="putingenres" datasource="#application.dsource#">
+                        insert into genrestobooks (bookid,genreid) values ('#form.isbn13#','#i#')
+                    </cfquery>
+                </cfloop>
+            </cfoutput>
 
             <cfcatch type="any">
                 <cfdump var="#cfcatch#">

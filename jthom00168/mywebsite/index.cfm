@@ -1,10 +1,9 @@
-
-
 <!doctype html>
 <html lang="eng">
 <head>
     <title>Red Point Books Home</title>
-<!--- Links to Bootstrap and our custom CSS. You'll have /username/includes....--->
+    <meta charset="utf-8">
+<!--- Links to Bootstrap and my custom CSS --->
     <link href="/CodeBase/includes/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="../includes/css/mycss.css" rel="stylesheet"/>
 <!--- Link to jQuery and the bootstrap Javascript --->

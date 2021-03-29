@@ -7,18 +7,42 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="../index.cfm">
                 <img src="../images/climbing.png"/>
             </a>
         </div>
 
-        <cfoutput>
+
         <div class="collapse navbar-collapse" id="myNav">
             <ul class="nav navbar-nav">
-                <li><a href="../index.cfm">Home</a></li>
-                <li><a href="#cgi.script_name#?tool=createuuids"">Create UUIDs</a></li>
+                <li class="active"><a href="../index.cfm">Home</a></li>
+                <li>
+                    <cfoutput>
+                        <form class="navbar-form navbar-left" role="search" action="#cgi.SCRIPT_NAME#?p=details" method="post">
+                            <div class="form-group">
+                                <input type="text" name="searchme" class="form-control" placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </cfoutput>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <cfoutput>
+                    <li><a href="#cgi.script_name#?tool=content">Add Content</a></li>
+                    <li><a href="#cgi.script_name#?tool=createuuids">Create UUIDs</a></li>
+                    <cfif session.user.IsAdmin>
+                            <li><a href="index.cfm"><span class="glyphicon glyphicon-log-in"></span>Add/Edit</a></li>
+                    </cfif>
+                    <cfif session.isloggedin>
+                        <li><a>Welcome #session.user.firstname#</a></li>
+                    <li><a href="#cgi.SCRIPT_NAME#?p=logoff ">logout</a></li>
+                    <cfelse>
+                            <li><a href="#cgi.SCRIPT_NAME#?p=login">Login</a></li>
+                    </cfif>
+                </cfoutput>
             </ul>
         </div>
-        </cfoutput>
     </div>
 </nav>

@@ -32,6 +32,7 @@
 <div class="col-lg-6">
     <cfoutput>
         #loginForm()#
+
     </cfoutput>
 </div>
 
@@ -136,6 +137,10 @@
             </label>
             <div class="col-lg-9">
                 <button class="btn btn-primary" type="submit">Login</button>
+            </div>
+        <!---  Reset password  --->
+            <div>
+                <a href="#cgi.script_name#?p=resetPassword">Reset Password</a>
             </div>
         </div>
     </form>
