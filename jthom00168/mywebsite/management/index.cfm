@@ -20,11 +20,11 @@
                 <cfinclude template="../header.cfm">
             </div>
 
-            <div class="col-lg-12 row">
+            <div id="hoizontalnav" class="row">
                 <cfinclude template="managementnavbar.cfm" />
             </div>
 
-            <div class="col-lg-12 row">
+            <div id="maincontent" class="row">
                 <cfinclude template="#tool#.cfm">
             </div>
 

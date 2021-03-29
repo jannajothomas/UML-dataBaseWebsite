@@ -314,7 +314,7 @@
 
 <!--- Delete all the genres in the genrestobooks --->
             <cfquery datasource="#application.dsource#">
-                delete from genrestobooks where bookid='#form.isbn13#'
+                delete from GenresToBooks where bookid='#form.isbn13#'
             </cfquery>
             <cfoutput>
 <!--- Looop over all the submitted genres and insert each into the database --->

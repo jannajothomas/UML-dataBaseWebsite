@@ -1,12 +1,7 @@
 <cfparam name="searchme" default="">
 <cfparam name="genre" default="">
 <cfparam name="publisher" default="">
-<cfset bookinfo=makeQuery()>
-
-
-
-
-
+<cfset bookInfo=makeQuery()>
 
 <cffunction name="noResults">
     We did not find anything with that term. Please Try Again.
@@ -14,27 +9,28 @@
 
 <!--- If there is one result --->
 <cffunction name="oneResult">
-    <cfargument name="bookQ" type="query" required="true">
+    <cfargument name="bookInfo" type="query" required="true">
     <div>
         <cfoutput>
-            <img src="/jthom00168/mywebsite/images/#bookinfo.image[1]#" style="float:right; width:200px;
+            <img src="images/#bookInfo.image[1]#" style="float:right; width:200px;
                 height:250px;">
-            <span><h2><strong></strong>#bookinfo.title[1]#</h2></span>
-            <span><h4><strong>Publisher: </strong>#bookinfo.name[1]#</h4></span>
-            <span><h4><strong>Description: </strong>#bookinfo.description[1]#</h4></span>
-            <span><h4><strong>Pages: </strong>#bookinfo.pages[1]#</h4></span>
-            <span><h4><strong>Language: </strong>#bookinfo.language[1]#</h4></span>
+            <span><h2><strong></strong>#bookInfo.title[1]#</h2></span>
+            <span><h4><strong>Publisher: </strong>#bookInfo.name[1]#</h4></span>
+            <span><h4><strong>Year Published: </strong>#bookInfo.year[1]#</h4></span>
+            <span><h4><strong>Description: </strong>#bookInfo.description[1]#</h4></span>
+            <span><h4><strong>Pages: </strong>#bookInfo.pages[1]#</h4></span>
+            <span><h4><strong>Language: </strong>#bookInfo.language[1]#</h4></span>
         </cfoutput>
     </div>
 </cffunction>
 
 <!‐‐‐ Display the correct view based on the number of results ‐‐‐> 
 <cfoutput>
-    <legend>#bookinfo.label#</legend>
+    <legend>#bookInfo.label#</legend>
     <cfif bookinfo.booksQuery.recordcount eq 0> #noResults()#
-        <cfelseif bookinfo.booksQuery.recordcount eq 1> #oneResult(bookinfo.booksQuery)#
+        <cfelseif bookInfo.booksQuery.recordcount eq 1> #oneResult(bookInfo.booksQuery)#
 	
-	    <cfelse> #manyResults(bookinfo.booksQuery)#
+	    <cfelse> #manyResults(bookInfo.booksQuery)#
     </cfif>
 </cfoutput>
 
@@ -50,7 +46,6 @@
 </cffunction>
 
 <cffunction name="makeQuery">
-    <!‐‐‐ We're going to return a struct with two keys: booksQuery and Label. booksQu ery is going to be the results. The label is to label the page as to what we searched for. ‐‐‐>
     <cfset bookInfo={booksQuery:queryNew("title")}>
 
     <!--- If we've submitted a genre --->
@@ -67,18 +62,18 @@
             where genreid='#genre#'
         </cfquery>
         <!--- Create the label from the Genre search --->
-        <cfset bookinfo.label="Genre:#whatGenre.genrename[1]#">
+        <cfset bookInfo.label="Genre:#whatGenre.genrename[1]#">
 
     <!--- If the request comes from the search box in the Nav --->
     <cfelseif searchme neq ''>
         <!--- Search for any hits in the DB based on the submitted search term --->
         <cfquery name="booksQuery" datasource="#application.dsource#">
             select * from books
-            inner join publishers on books.publisher = publishers.id
+            inner join publishers on books.publisher = Publishers.publisher_ID
             where title like '%#trim(searchme)#%' or isbn13='#searchme#'
         </cfquery>
         <!--- Create the label for this search type --->
-        <cfset bookinfo.label="Keyword:#searchme#">
+        <cfset bookInfo.label="Keyword:#searchme#">
     <cfelseif publisher neq ''>
         <cfquery name="booksQuery" datasource="#application.dsource#">
             select * from books
@@ -86,9 +81,9 @@
             where publishers.ID ='#publisher#'
         </cfquery>
 <!--- Create the label for this search type --->
-        <cfset bookinfo.label="Publisher:#booksQuery.name#">
+        <cfset bookInfo.label="Publisher:#booksQuery.name#">
     </cfif>
 
-    <cfset bookinfo.booksQuery=booksquery>
-    <cfreturn bookinfo>
+    <cfset bookInfo.booksQuery=booksquery>
+    <cfreturn bookInfo>
 </cffunction>
