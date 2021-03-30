@@ -2,6 +2,7 @@
     <!--  Case of no inputs -->
     <cfparam name="book" default="">
     <cfparam name="qterm" default="">
+    <cfparam name="allowISBNEdit" default="">
 
     <!--  Process Forms -->
     <cfset processForms()>
@@ -59,17 +60,30 @@
                 <input type="hidden" name="qterm" value="#qterm#" />
                 <div class="form-group row">
 
-                   <!---<cfif session.user.isadmin>--->
                     <label for="isbn13" class="col-sm-2 control-label">ISBN13</label>
                     <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="isbn13"
-                           name="isbn13"
-                           placeholder="ISBN13"
-                    value="#thisBook.isbn13[1]#"/>
+                    <cfif (allowISBNEdit neq '') OR (#thisBook.isbn13[1]# eq '')>
+                        cfif
+                            <input type="text"
+                                   class="form-control"
+                                   id="isbn13"
+                                   name="isbn13"
+                                   placeholder="ISBN13"
+                                    value="#thisBook.isbn13[1]#"
+                                />
+                    <cfelse>
+                        cfelse
+                            <input type="text"
+                                   class="form-control"
+                                   id="isbn13"
+                                   name="isbn13"
+                                   placeholder="ISBN13"
+                                    value="#thisBook.isbn13[1]#"
+                                    readonly
+                        />
+                    </cfif>
+
                     </div>
-                    <!---</cfif>--->
                 </div>
 
                 <!--- Title --->
@@ -199,10 +213,10 @@
                 <div class="form-group row">
                     <label for="coverImage" class="col-sm-2 col-form-label">Cover</label>
                     <div class="col-sm-10">
-                    <!--<input type="file" class="form-control" id="coverimage" name="uploadimage">-->
                         <input type="file" name="uploadimage" class="col-sm-6"/>
                         <input type="hidden" name="image" value="#trim(thisBook.image[1])#"/>
                         <cfif thisBook.image[1] neq ''>
+                            You should show this book #trim(thisBook.image[1])#
                                 <img  style="width:100px" src="/../images/#trim(thisBook.image[1])#" alt="">
                         </cfif>
 
@@ -317,7 +331,7 @@
                 delete from GenresToBooks where bookid='#form.isbn13#'
             </cfquery>
             <cfoutput>
-<!--- Looop over all the submitted genres and insert each into the database --->
+<!--- Loop over all the submitted genres and insert each into the database --->
                 <cfloop list="#form.genre#" index="i">
                     <cfquery name="putingenres" datasource="#application.dsource#">
                         insert into genrestobooks (bookid,genreid) values ('#form.isbn13#','#i#')
