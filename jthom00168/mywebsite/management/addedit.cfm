@@ -249,26 +249,26 @@
 
 <!-- -----------------------------------------------Side Nav --------------------------------->
 <cffunction name="sideNav">
-    <cftry>
-        <cfoutput>
+    <cfoutput>
+        <cftry>
+
             <form action="#cgi.script_name#?tool=addedit" method="post" class="form-inline">
                 <div class="form-group">
                     <input type="text" class="form-control" id="qterm" name="qterm" value="#qterm#">
                     <button type="submit" class="btn btn-xs btn-primary">Search</button>
                 </div>
             </form>
-        </cfoutput>
 
-        <cfif qterm neq ''>
-            <cfquery name="allBooks" datasource="#application.dsource#">
-                select * from books
-                where title like '%#qterm#%'
-                order by title
-            </cfquery>
-        </cfif>
+            <cfif qterm neq ''>
+                <cfquery name="allBooks" datasource="#application.dsource#">
+                    select * from books
+                    where title like '%#qterm#%'
+                    order by title
+                </cfquery>
+            </cfif>
 
-        <div>Book List</div>
-        <cfoutput>
+            <div>Book List</div>
+
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link" href="#cgi.script_name#?tool=addedit&book=new">Add a Book</a>
@@ -285,63 +285,62 @@
                     No Search Term Entered (Try climb)
                 </cfif>
             </ul>
-        </cfoutput>
-        <cfcatch type="any">
-            <cfdump var="#cfcatch#">
-        </cfcatch>
-    </cftry>
-</cffunction>
-
-<!-- ---------------------------------------- Process Forms ------------------------------>
-<cffunction name="processForms">
-    <cfif form.keyExists("isbn13")>
-
-        <cfquery name="putBookIn" datasource="#application.dsource#">
-            if not exists(select * from books where isbn13='#form.isbn13#')
-            insert into books (isbn13,title) values ('#form.isbn13#','#form.title#');
-            update books SET
-                title='#form.title#',
-                weight='#form.weight#',
-                year='#form.year#',
-                isbn='#form.isbn#',
-                pages='#form.pages#',
-                language='#form.language#',
-                image='#form.image#',
-                publisher='#form.publisher#',
-                description='#form.description#'
-            where isbn13='#form.isbn13#'
-        </cfquery>
-    </cfif>
-
-    <cfif isdefined('form.uploadimage') and trim(form.uploadimage) neq ''>
-        <cffile action="upload" filefield="uploadimage" destination="#expandpath('/')#jthom00168/mywebsite/images"
-                nameconflict="makeunique"/>
-        <cfset form.image = '#cffile.serverfile#'>
-
-        <cftry>
-
-            <cfquery name="putin" datasource="#application.dsource#">
-                update books
-                set title='#form.title#', image='#form.image#', description='#form.description#',  publisher='#form.publisher#'
-                where isbn13='#form.isbn13#'
-            </cfquery>
-
-<!--- Delete all the genres in the genrestobooks --->
-            <cfquery datasource="#application.dsource#">
-                delete from GenresToBooks where bookid='#form.isbn13#'
-            </cfquery>
-            <cfoutput>
-<!--- Loop over all the submitted genres and insert each into the database --->
-                <cfloop list="#form.genre#" index="i">
-                    <cfquery name="putingenres" datasource="#application.dsource#">
-                        insert into genrestobooks (bookid,genreid) values ('#form.isbn13#','#i#')
-                    </cfquery>
-                </cfloop>
-            </cfoutput>
 
             <cfcatch type="any">
                 <cfdump var="#cfcatch#">
             </cfcatch>
         </cftry>
-    </cfif>
+    </cfoutput>
+</cffunction>
+
+<!-- ---------------------------------------- Process Forms ------------------------------>
+<cffunction name="processForms">
+    <cfoutput>
+
+            <cfif isdefined('form.isbn13')>
+
+
+                <cfif isdefined('form.uploadimage') and trim(form.uploadimage) neq ''>
+                    <cffile action="upload" filefield="uploadimage" destination="#expandpath('/')#jthom00168/mywebsite/images"
+                            nameconflict="makeunique"/>
+                    <cfset form.image = '#cffile.serverfile#'>
+                </cfif>
+
+                <cfif form.keyExists("isbn13")>
+                    <cfquery name="putBookIn" datasource="#application.dsource#">
+                        if not exists(select * from books where isbn13='#form.isbn13#')
+                    insert into books (isbn13,title) values ('#form.isbn13#','#form.title#');
+                    update books SET
+                    title='#form.title#',
+                    weight='#form.weight#',
+                    year='#form.year#',
+                    isbn='#form.isbn#',
+                    pages='#form.pages#',
+                    language='#form.language#',
+                    image='#form.image#',
+                    publisher='#form.publisher#',
+                    description='#form.description#'
+                    where isbn13='#form.isbn13#'
+                    </cfquery>
+                </cfif>
+
+                <cfquery name="putin" datasource="#application.dsource#">
+                    update books
+                    set title='#form.title#', image='#form.image#', description='#form.description#',  publisher='#form.publisher#'
+                    where isbn13='#form.isbn13#'
+                </cfquery>
+
+<!--- Delete all the genres in the genrestobooks --->
+            <cfquery datasource="#application.dsource#">
+                delete from GenresToBooks where bookid='#form.isbn13#'
+            </cfquery>
+
+<!--- Loop over all the submitted genres and insert each into the database --->
+            <cfloop list="#form.genre#" index="i">
+                <cfquery name="putingenres" datasource="#application.dsource#">
+                    insert into GenresToBooks (bookid, genreid) values ('#form.isbn13#','#i#')
+                </cfquery>
+            </cfloop>
+        </cfif>
+    </cfoutput>
 </cffunction>

@@ -7,6 +7,9 @@
     </head>
 
     <body>
+<!--- Dump out the server scope. --->
+<cfdump var="#SERVER#" />
+
         <!--- All the contents should be wrapped in a div.container --->
 
             <!--- The Top Header should be its own div#topHeader and

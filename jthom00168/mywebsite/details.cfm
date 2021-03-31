@@ -3,11 +3,23 @@
 <cfparam name="publisher" default="">
 <cfset bookInfo=makeQuery()>
 
+
+
+<!---Display view based on number of results--->
+<cfoutput>
+    <legend>#bookInfo.label#</legend>
+    <cfif bookinfo.booksQuery.recordcount eq 0> #noResults()#
+        <cfelseif bookInfo.booksQuery.recordcount eq 1> #oneResult(bookInfo.booksQuery)#
+        <cfelse> #manyResults(bookInfo.booksQuery)#
+    </cfif>
+</cfoutput>
+
+<!---No Results--->
 <cffunction name="noResults">
     We did not find anything with that term. Please Try Again.
 </cffunction>
 
-<!--- If there is one result --->
+<!--- One Result --->
 <cffunction name="oneResult">
     <cfargument name="bookInfo" type="query" required="true">
     <div>
@@ -24,20 +36,9 @@
     </div>
 </cffunction>
 
-<!‐‐‐ Display the correct view based on the number of results ‐‐‐> 
-<cfoutput>
-    <legend>#bookInfo.label#</legend>
-    <cfif bookinfo.booksQuery.recordcount eq 0> #noResults()#
-        <cfelseif bookInfo.booksQuery.recordcount eq 1> #oneResult(bookInfo.booksQuery)#
-	
-	    <cfelse> #manyResults(bookInfo.booksQuery)#
-    </cfif>
-</cfoutput>
-
-<!--- If there are many result --->
+<!--- More than one result --->
 <cffunction name="manyResults">
     <cfargument name="bookQ" type="query" required="true">
-
     <ol class="nav nav-stacked">
         <cfoutput query="arguments.bookQ">
             <li><a href="#cgi.script_name#?p=details&searchme=#trim(isbn13)#">#trim(title)#</a></li>
@@ -48,39 +49,38 @@
 <cffunction name="makeQuery">
     <cfset bookInfo={booksQuery:queryNew("title")}>
 
-    <!--- If we've submitted a genre --->
     <cfif genre neq ''>
-        <!--- Get the name of the genre for the label --->
+    <!---Search comes from Genre--->
         <cfquery name="whatGenre" datasource="#application.dsource#">
             select * from Genres where genreid='#genre#'
         </cfquery>
-        <!--- Get the search results for this genre submission --->
+
+        <!--- Get the books that match the genre --->
         <cfquery name="booksQuery" datasource="#application.dsource#">
-            select * from books
-            inner join Publishers on books.publisher = Publishers.publisher_ID
-            inner join GenresToBooks on books.isbn13 = GenresToBooks.bookid
+            select * from Books
+            inner join Publishers on Books.publisher = Publishers.publisher_ID
+            inner join GenresToBooks on Books.isbn13 = GenresToBooks.bookid
             where genreid='#genre#'
         </cfquery>
-        <!--- Create the label from the Genre search --->
         <cfset bookInfo.label="Genre:#whatGenre.genrename[1]#">
 
-    <!--- If the request comes from the search box in the Nav --->
+
     <cfelseif searchme neq ''>
-        <!--- Search for any hits in the DB based on the submitted search term --->
+    <!--- Search comes from search box --->
         <cfquery name="booksQuery" datasource="#application.dsource#">
-            select * from books
-            inner join publishers on books.publisher = Publishers.publisher_ID
+            select * from Books
+            inner join Publishers on Books.publisher = Publishers.publisher_ID
             where title like '%#trim(searchme)#%' or isbn13='#searchme#'
         </cfquery>
-        <!--- Create the label for this search type --->
         <cfset bookInfo.label="Keyword:#searchme#">
+
     <cfelseif publisher neq ''>
-        <cfquery name="booksQuery" datasource="#application.dsource#">
-            select * from books
-            inner join publishers on books.publisher = publishers.id
-            where publishers.ID ='#publisher#'
-        </cfquery>
-<!--- Create the label for this search type --->
+        <!--- Search comes from publisher --->
+            <cfquery name="booksQuery" datasource="#application.dsource#">
+                select * from books
+                inner join Publishers on Books.publisher = Publishers.publisher_ID
+                where Publishers.publisher_ID ='#publisher#'
+            </cfquery>
         <cfset bookInfo.label="Publisher:#booksQuery.name#">
     </cfif>
 

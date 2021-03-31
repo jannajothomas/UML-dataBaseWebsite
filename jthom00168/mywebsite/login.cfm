@@ -1,3 +1,4 @@
+
 <!--- This is a variable to store any messages about the new account --->
 <cfparam name="accountMessage" default="">
 <!--- This is a variable to store any messages about logging in --->
@@ -24,6 +25,8 @@
 <!---Left side of page --->
 <div class="col-lg-6">
 <cfoutput>
+
+
         #newUserForm()#
     </cfoutput>
 </div>

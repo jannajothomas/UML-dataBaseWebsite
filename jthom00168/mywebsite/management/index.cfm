@@ -15,7 +15,7 @@
 
         <cfparam name="tool" default="addedit">
     <body>
-        <div id="wrapper" class="container">
+<div id="wrapper" class="container">
             <div id="topHeader" class="row">
                 <cfinclude template="../header.cfm">
             </div>
