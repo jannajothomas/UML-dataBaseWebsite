@@ -6,20 +6,20 @@
 <!---Try to load user--->
 <cfif isdefined('form.loginEmail')>
 
-    <!---Check dB for proper uesr login credentials--->
+    <!---Check dB for proper user login credentials--->
     <cfquery name="access" datasource="#application.dsource#">
         select * from People
         inner join Passwords on People.people_id = Passwords.personId
         where email='#form.loginEmail#' and password='#hash(form.loginPass,"SHA-256")#'
     </cfquery>
 
-    <!---Credentils are correct, user is found--->
+    <!---Credentials are correct, user is found--->
     <cfif access.recordcount gt 0>
         <!---Load session user variables--->
         <cfset session.user.firstName=access.firstName[1]>
         <cfset session.user.lastName=access.lastName[1]>
         <cfset session.user.email=access.email[1]>
-        <cfset session.user.acctnumber=access.people_id[1]>
+        <cfset session.user.acctumber=access.people_id[1]>
         <cfset session.isloggedin=true>
 
         <!---Success. Redirect to carousel--->
@@ -32,7 +32,7 @@
 
     <!---Failure.  Credentials  do not match.  Display an error message--->
     <cfelse>
-        <<cfset loginMessage="Sorry, that login doesn't match" />
+        <cfset loginMessage="Sorry, that login doesn't match" >
     </cfif>
 </cfif>
 
