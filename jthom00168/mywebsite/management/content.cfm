@@ -32,20 +32,24 @@
             <form action="#cgi.script_name#?tool=content" method="post" enctype="multipart/form-data" >
                 <input type="hidden" name="contentForm" value="#editArticle.id[1]#" />
 
-                <!--- UUID --->
-                <div class="form-group row">
-                    <label for="title" class="col-sm-2 col-form-label"> UUID </label>
-                <div class="col-sm-10">
-                        <input  type="text"
-                                class="form-control"
-                                id="id"
-                                name="id"
-                        value="#editArticle.id[1]#"
-                                readonly
 
-                            /><br/>
-            </div>
-            </div>
+                <cfif thisId neq 'new'>
+                <!--- UUID --->
+                        <div class="form-group row">
+                            <label for="title" class="col-sm-2 col-form-label"> UUID </label>
+                        <div class="col-sm-10">
+                                <input  type="text"
+                                        class="form-control"
+                                        id="id"
+                                        name="id"
+                                value="#editArticle.id[1]#"
+                                        readonly
+
+                    /><br/>
+                    </div>
+                    </div>
+                </cfif>
+
 
                     <!--- Title --->
                     <div class="form-group row">
@@ -57,7 +61,6 @@
                                             id="title"
                                             name="title"
                                             value="#editArticle.Title[1]#"
-                                            readonly
                                 />
                                 <cfelse>
                                     <input  type="text"
