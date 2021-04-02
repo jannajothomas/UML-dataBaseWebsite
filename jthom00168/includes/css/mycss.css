@@ -67,3 +67,14 @@ body{
     color: teal;
     font-size: 265%;
 }
+
+.container-fluid {
+    padding-right: 0px;
+
+
+}
+
+.navbar-collapse{
+    padding-right: 0px;
+    padding-left: 0px;
+}

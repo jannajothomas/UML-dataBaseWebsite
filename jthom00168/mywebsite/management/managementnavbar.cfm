@@ -12,14 +12,14 @@
             </a>
         </div>
 
-
-        <div class="collapse navbar-collapse" id="myNav">
-            <ul class="nav navbar-nav">
+<!---Navbar left--->
+        <div class="collapse navbar-collapse navbar-left" id="myNav">
+            <ul class="nav navbar-nav px-1">
                 <cfoutput>
-                    <li class="active"><a href="../index.cfm">Home</a></li>
-                    <li class="active"><a href="../index.cfm?p=storeinfo">Store Info</a></li>
-                    <li class="active"><a href="../index.cfm?p=stafffavorites">Staff Favorites</a></li>
-                    <li class="active"><a href="../index.cfm?p=events">Events</a></li>
+                    <li><a href="../index.cfm">Home</a></li>
+                    <li><a href="../index.cfm?p=storeinfo">Store Info</a></li>
+                    <li><a href="../index.cfm?p=stafffavorites">Staff Favorites</a></li>
+                    <li><a href="../index.cfm?p=events">Events</a></li>
                     <li>
                             <form class="navbar-form navbar-left" role="search" action="../index.cfm?p=details"
                                   method="post">
@@ -32,19 +32,23 @@
                     </li>
                 </cfoutput>
             </ul>
-
-            <ul class="nav navbar-nav navbar-right">
+        </div>
+<!---Navbar right--->
+        <div class="collapse navbar-collapse navbar-right" id="myNav">
+            <ul class="nav navbar-nav">
                 <cfoutput>
-                    <li><a href="#cgi.script_name#?tool=content">Add Content</a></li>
-                    <li><a href="#cgi.script_name#?tool=createuuids">Create UUIDs</a></li>
+                    <li><a href="#cgi.script_name#?tool=content">Edit Content</a></li>
+                    <li><a href="#cgi.script_name#?tool=createuuids">UUIDs</a></li>
                     <cfif session.user.IsAdmin>
-                            <li><a href="index.cfm"><span class="glyphicon glyphicon-log-in"></span>Add/Edit</a></li>
+
+                            <li><a href="index.cfm"></span>Edit Books</a></li>
                     </cfif>
                     <cfif session.isloggedin>
                         <li><a>Welcome #session.user.firstname#</a></li>
-                    <li><a href="#cgi.SCRIPT_NAME#?p=logoff ">logout</a></li>
+                    <li><a href="../index.cfm?p=logoff">logout</a></li>
                     <cfelse>
-                            <li><a href="#cgi.SCRIPT_NAME#?p=login">Login</a></li>
+                            <li><a href="#cgi.SCRIPT_NAME#?p=login"><span class="glyphicon
+                            glyphicon-log-in"></span>Login</a></li>
                     </cfif>
                 </cfoutput>
             </ul>

@@ -38,13 +38,15 @@
         <ul class="nav navbar-nav">
             <cfoutput>
                 <cfif session.user.IsAdmin>
-                        <li><a href="management/index.cfm"><span class="glyphicon glyphicon-log-in"></span>Add/Edit</a></li>
+                        <li><a href="management/index.cfm">Add/Edit</a></li>
                 </cfif>
                 <cfif session.isloggedin>
                     <li><a>Welcome #session.user.firstname#</a></li>
                 <li><a href="#cgi.SCRIPT_NAME#?p=logoff ">logout</a></li>
                 <cfelse>
-                        <li><a href="#cgi.SCRIPT_NAME#?p=login">Login</a></li>
+                        <li><a href="#cgi.SCRIPT_NAME#?p=login">
+                        <span class="glyphicon glyphicon-log-in"></span>
+                        Login</a></li>
                 </cfif>
             </cfoutput>
         </ul>
