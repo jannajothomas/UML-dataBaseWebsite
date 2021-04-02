@@ -63,7 +63,6 @@
                     <label for="isbn13" class="col-sm-2 control-label">ISBN13</label>
                     <div class="col-sm-10">
                     <cfif (allowISBNEdit neq '') OR (#thisBook.isbn13[1]# eq '')>
-                        cfif
                             <input type="text"
                                    class="form-control"
                                    id="isbn13"
@@ -250,8 +249,10 @@
 <!-- -----------------------------------------------Side Nav --------------------------------->
 <cffunction name="sideNav">
     <cfoutput>
-        <cftry>
-
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                    <a class="nav-link" href="#cgi.script_name#?tool=addedit&book=new">Add a Book</a>
+            </li>
             <form action="#cgi.script_name#?tool=addedit" method="post" class="form-inline">
                 <div class="form-group">
                     <input type="text" class="form-control" id="qterm" name="qterm" value="#qterm#">
@@ -261,55 +262,61 @@
 
             <cfif qterm neq ''>
                 <cfquery name="allBooks" datasource="#application.dsource#">
-                    select * from books
+                    select * from Books
                     where title like '%#qterm#%'
                     order by title
                 </cfquery>
             </cfif>
 
-            <div>Book List</div>
 
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link" href="#cgi.script_name#?tool=addedit&book=new">Add a Book</a>
-                </li>
                 <cfif isdefined('allBooks')>
+                    <div>Search Results</div>
                     <cfloop query="allBooks">
                         <li class="nav-item">
-                            <a class="nav-link" href="#cgi.script_name#?tool=addedit&book=#trim(isbn13)
-                                #&qterm=#qterm#">#trim(title)#
+                            <a class="nav-link"
+                                href="#cgi.script_name#?tool=addedit&book=#trim(isbn13)#&qterm=#qterm#">
+                                #trim(title)#
                             </a>
                         </li>
                     </cfloop>
-                <cfelse>
-                    No Search Term Entered (Try climb)
                 </cfif>
+
+                <div> A selection of 5 books</div>
+                <cfquery name="fiveBookQuery" datasource="#application.dsource#">
+                        select * from Books
+                        ORDER BY ISBN13
+                        OFFSET 0 rows
+                        FETCH next 5 rows only;
+
+                </cfquery>
+
+                <cfloop query="fiveBookQuery">
+                    <li>
+                        <a class="nav-link"
+                            href="#cgi.script_name#?tool=addedit&book=#trim(isbn13)#&qterm=#qterm#">
+                            #trim(title)#
+                    </a>
+                    </li>
+                </cfloop>
             </ul>
 
-            <cfcatch type="any">
-                <cfdump var="#cfcatch#">
-            </cfcatch>
-        </cftry>
     </cfoutput>
 </cffunction>
 
 <!-- ---------------------------------------- Process Forms ------------------------------>
 <cffunction name="processForms">
     <cfoutput>
-
-            <cfif isdefined('form.isbn13')>
-
-
-                <cfif isdefined('form.uploadimage') and trim(form.uploadimage) neq ''>
-                    <cffile action="upload" filefield="uploadimage" destination="#expandpath('/')#jthom00168/mywebsite/images"
-                            nameconflict="makeunique"/>
-                    <cfset form.image = '#cffile.serverfile#'>
-                </cfif>
+        <cfif isdefined('form.isbn13')>
+            <cfif isdefined('form.uploadimage') and trim(form.uploadimage) neq ''>
+                <cffile action="upload" filefield="uploadimage" destination="#expandpath('/')#jthom00168/mywebsite/images"
+                        nameconflict="makeunique"/>
+                <cfset form.image = '#cffile.serverfile#'>
+            </cfif>
 
                 <cfif form.keyExists("isbn13")>
                     <cfquery name="putBookIn" datasource="#application.dsource#">
-                        if not exists(select * from books where isbn13='#form.isbn13#')
-                    insert into books (isbn13,title) values ('#form.isbn13#','#form.title#');
+                        if not exists(select * from Books where ISBN13='#form.isbn13#')
+                    insert into Books (ISBN13,title) values ('#form.isbn13#','#form.title#');
                     update books SET
                     title='#form.title#',
                     weight='#form.weight#',

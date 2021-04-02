@@ -1,65 +1,87 @@
-<cftry>
-    <!---  Case of no inputs --->
-    <cfparam name="articleId" default="">
-    <cfparam name="qTerm" default="">
+<!---  Case of no inputs --->
+<cfparam name="thisId" default="">
 
-    <!--  Process Forms -->
-    <cfset processForms()>
+<!--  Process Forms -->
+<cfset processForms()>
 
-    <!--  Display Data -->
-    <div id="main" class="col-lg-9 col-lg-push-3">
+<!--  Display Data -->
+<div id="main" class="col-lg-9 col-lg-push-3">
     <cfoutput>#editContent()#</cfoutput>
-    </div>
+</div>
 
-    <div id="leftGutter" class="col-lg-3 col-lg-pull-9">
+<div id="leftGutter" class="col-lg-3 col-lg-pull-9">
     <cfoutput>#sideContentNav()#</cfoutput>
-    </div>
+</div>
 
-    <cfcatch type="any">
-        <cfoutput>
-            #cfcatch.Message#
-        </cfoutput>
-    </cfcatch>
-</cftry>
-<!---Redirect to index if user doesn't have admin privilidges--->
+<!---Redirect to index if user doesn't have admin privileges--->
 <cfif session.user.IsAdmin neq 1>
     <cflocation url = "../index.cfm">
 </cfif>
 
-<!-- ----------------------------------Edit Content------------------------------------------>
-<cffunction name="editContent">
-    <!--Decide if an article should be shown -->
-    <cfif articleId neq ''>
-        <cfquery name="thisArticle" datasource="#application.dsource#">
-            select * from article where id='#articleId#'
-        </cfquery>
-        <cfoutput>
-            <form action="#cgi.script_name#?tool=content" method="post" enctype="multipart/form-data" >
-                <input type="hidden" name="qterm" value="#qTerm#" />
+<!--- ----------------------------------Edit Content------------------------------------------>
 
-                <!--- Title --->
+<cffunction name="editContent">
+    <cfoutput>
+        <!---Decide if an article should be shown --->
+        <cfif thisId neq ''>
+
+            <cfquery name="editArticle" datasource="#application.dsource#">
+                select * from Article where id='#thisId#'
+            </cfquery>
+
+            <form action="#cgi.script_name#?tool=content" method="post" enctype="multipart/form-data" >
+                <input type="hidden" name="contentForm" value="#editArticle.id[1]#" />
+
+                <!--- UUID --->
                 <div class="form-group row">
-                    <label for="title" class="col-sm-2 col-form-label"> Article Title </label>
-                    <div class="col-sm-10">
+                    <label for="title" class="col-sm-2 col-form-label"> UUID </label>
+                <div class="col-sm-10">
                         <input  type="text"
                                 class="form-control"
-                                id="title"
-                                name="title"
-                                value="#thisArticle.Title[1]#"
+                                id="id"
+                                name="id"
+                        value="#editArticle.id[1]#"
                                 readonly
-                                /><br/>
+
+                            /><br/>
+            </div>
+            </div>
+
+                    <!--- Title --->
+                    <div class="form-group row">
+                        <label for="title" class="col-sm-2 col-form-label"> Content Type </label>
+                        <div class="col-sm-10">
+                            <cfif thisID neq 'new'>
+                                    <input  type="text"
+                                            class="form-control"
+                                            id="title"
+                                            name="title"
+                                            value="#editArticle.Title[1]#"
+                                            readonly
+                                />
+                                <cfelse>
+                                    <input  type="text"
+                                            class="form-control"
+                                            id="title"
+                                            name="title"
+                                            value="#editArticle.Title[1]#"
+                                />
+                            </cfif>
+
+
+                            <br/>
+                        </div>
                     </div>
-                </div>
 
                 <!--- Description--->
                 <div class="form-group row">
-                    <label for="bookDesc" class="col-sm-2 col-form-label" style="text-align: left">Description</label>
+                    <label for="text" class="col-sm-2 col-form-label" style="text-align: left">Description</label>
                     <div class="col-sm-10">
-                        <textarea id="bookDesc" name="description">
-                            #trim(thisArticle.text[1])#
+                        <textarea id="description" name="description">
+                            #trim(editArticle.text[1])#
                         </textarea>
                         <script>
-                            CKEDITOR.replace("bookDesc")
+                            CKEDITOR.replace("description")
                         </script>
                     </div>
                 </div>
@@ -67,12 +89,13 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">&nbsp;</label>
                     <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">Add Book</button>
+                        <button type="submit" class="btn btn-primary">Update Content</button>
                     </div>
                 </div>
             </form>
-        </cfoutput>
+
     </cfif>
+</cfoutput>
 </cffunction>
 
 
@@ -83,18 +106,22 @@
         <cftry>
             <cfquery name="allContent" datasource="#application.dsource#">
                 select * from Article
-                order by title
+                order by Title
             </cfquery>
 
             <div>Content List</div>
+
             <ul class="nav flex-column">
+                <li class="nav-item">
+                        <a class="nav-link" href="#cgi.script_name#?tool=content&thisId=new">Add New Content</a>
+                </li>
                 <cfif isdefined('allContent')>
                     <cfloop query="allContent">
                             <li class="nav-item">
                                     <a class="nav-link"
-                                    href="#cgi.script_name#?tool=content&articleid=#trim(id)#&qterm=#qterm#">#trim
-                        (Title)#
-                            </a>
+                                    href="#cgi.script_name#?tool=content&thisId=#trim(id)#">
+                                    #trim(Title)#
+                                </a>
                             </li>
                     </cfloop>
                 <cfelse>
@@ -110,24 +137,20 @@
 
 <!-- ---------------------------------------- Process Forms ------------------------------>
 <cffunction name="processForms">
-    <!---
-    <cfif form.keyExists("isbn13")>
+    <cfoutput>
+        <cfif isdefined('form.id')>
+            <!---If form id has not been created, create new UUID for it--->
+            <cfif form.id eq ''>
+                <cfset form.id=createuuid()>
+            </cfif>
+            <cfquery name="addContent" datasource="#application.dsource#">
+                if not exists(select * from Article where id='#form.id#')
+                    insert into Article (id, Title) values ('#form.id#','#form.title#');
+                update Article
+                set title='#form.title#', Text='#form.description#'
+                where id='#form.id#'
 
-        <cfquery name="putBookIn" datasource="#application.dsource#">
-            if not exists(select * from books where isbn13='#form.isbn13#')
-        insert into books (isbn13,title) values ('#form.isbn13#','#form.title#');
-        update books SET
-        title='#form.title#',
-        weight='#form.weight#',
-        year='#form.year#',
-        isbn='#form.isbn#',
-        pages='#form.pages#',
-        language='#form.language#',
-        image='#form.image#',
-        publisher='#form.publisher#',
-        description='#form.description#'
-        where isbn13='#form.isbn13#'
-        </cfquery>
-    </cfif>
-    --->
+            </cfquery>
+        </cfif>
+    </cfoutput>
 </cffunction>
