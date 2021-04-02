@@ -31,7 +31,6 @@
             </cfoutput>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-
         <cfoutput>
             <cfif session.user.IsAdmin>
                     <li><a href="management/index.cfm"><span class="glyphicon glyphicon-log-in"></span>Add/Edit</a></li>
@@ -42,7 +41,6 @@
             <cfelse>
                     <li><a href="#cgi.SCRIPT_NAME#?p=login">Login</a></li>
             </cfif>
-
         </cfoutput>
         </ul>
     </div>

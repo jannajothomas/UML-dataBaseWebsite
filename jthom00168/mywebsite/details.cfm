@@ -1,6 +1,7 @@
 <cfparam name="searchme" default="">
 <cfparam name="genre" default="">
 <cfparam name="publisher" default="">
+<cfparam name="booksQuery" default="">
 <cfset bookInfo=makeQuery()>
 
 
