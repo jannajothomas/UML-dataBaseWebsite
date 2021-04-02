@@ -21,7 +21,7 @@
             </div>
 
             <div id="hoizontalnav" class="row">
-                <cfinclude template="managementnavbar.cfm" />
+                <cfinclude template="../horizontalnav.cfm" />
             </div>
 
             <div id="maincontent" class="row">

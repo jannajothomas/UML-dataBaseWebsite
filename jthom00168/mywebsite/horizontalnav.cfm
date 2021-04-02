@@ -10,17 +10,17 @@
             <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="index.cfm">
-            <img src="images/climbing.png"/>
+            <img src="/jthom00168/mywebsite/images/climbing.png"/>
         </a>
     </div>
 <!---Navbar Left--->
     <div class="collapse navbar-collapse navbar-left" id="myNav">
         <ul class="nav navbar-nav">
             <cfoutput>
-                <li><a href="index.cfm">Home</a></li>
-                <li><a href="#cgi.SCRIPT_NAME#?p=storeinfo">Store Info</a></li>
-                <li><a href="#cgi.SCRIPT_NAME#?p=staffFavorites">Staff Favorites</a></li>
-                <li><a href="#cgi.SCRIPT_NAME#?p=events">Events</a></li>
+                <li><a href="/jthom00168/mywebsite/index.cfm">Home</a></li>
+                <li><a href="/jthom00168/mywebsite/index.cfm?p=storeinfo">Store Info</a></li>
+                <li><a href="/jthom00168/mywebsite/index.cfm?p=staffFavorites">Staff Favorites</a></li>
+                <li><a href="/jthom00168/mywebsite/index.cfm?p=events">Events</a></li>
                 <li>
                         <form class="navbar-form navbar-left" role="search" action="#cgi.SCRIPT_NAME#?p=details" method="post">
                             <div class="form-group">
@@ -37,10 +37,12 @@
     <div class="collapse navbar-collapse navbar-right" id="myNav">
         <ul class="nav navbar-nav">
             <cfoutput>
-                <cfif session.user.IsAdmin>
-                        <li><a href="management/index.cfm">Add/Edit</a></li>
-                </cfif>
                 <cfif session.isloggedin>
+                    <cfif session.user.IsAdmin>
+                            <li><a href="/jthom00168/mywebsite/management/index.cfm">Add/Edit</a></li>
+                            <li><a href="/jthom00168/mywebsite/management/index.cfm?tool=content">Edit Content</a></li>
+                            <li><a href="/jthom00168/mywebsite/management/index.cfm?tool=createuuids">UUIDs</a></li>
+                    </cfif>
                     <li><a>Welcome #session.user.firstname#</a></li>
                 <li><a href="#cgi.SCRIPT_NAME#?p=logoff ">logout</a></li>
                 <cfelse>
