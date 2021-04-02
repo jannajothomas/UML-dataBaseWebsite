@@ -29,7 +29,9 @@ checks on permissions to decide what gets displayed--->
                             <form class="navbar-form navbar-left" role="search" action="../index.cfm?p=details"
                                   method="post">
                                 <div class="form-group">
-                                    <input type="text" name="searchMe" class="form-control" placeholder="Search"/>
+                                    <label for="siteSearch" class="sr-only">Search</label>
+                                    <input type="text" id="siteSearch" name="searchMe" class="form-control"
+                                    placeholder="Search"/>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
