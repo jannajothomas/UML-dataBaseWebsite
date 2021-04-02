@@ -1,3 +1,8 @@
+<!---Late in the I realized maintaining both of these menu bars was problematic, so I combined them and put
+checks on permissions to decide what gets displayed--->
+
+<!---This is just left in place for legacy purposes--->
+
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -8,7 +13,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="../index.cfm">
-                <img src="../images/climbing.png"/>
+                <img src="../images/climbing.png" alt=""/>
             </a>
         </div>
 
@@ -17,14 +22,14 @@
             <ul class="nav navbar-nav px-1">
                 <cfoutput>
                     <li><a href="../index.cfm">Home</a></li>
-                    <li><a href="../index.cfm?p=storeinfo">Store Info</a></li>
-                    <li><a href="../index.cfm?p=stafffavorites">Staff Favorites</a></li>
+                    <li><a href="../index.cfm?p=storeInfo">Store Info</a></li>
+                    <li><a href="../index.cfm?p=staffFavorites">Staff Favorites</a></li>
                     <li><a href="../index.cfm?p=events">Events</a></li>
                     <li>
                             <form class="navbar-form navbar-left" role="search" action="../index.cfm?p=details"
                                   method="post">
                                 <div class="form-group">
-                                    <input type="text" name="searchme" class="form-control" placeholder="Search">
+                                    <input type="text" name="searchMe" class="form-control" placeholder="Search"/>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
@@ -38,10 +43,10 @@
             <ul class="nav navbar-nav">
                 <cfoutput>
                     <li><a href="#cgi.script_name#?tool=content">Edit Content</a></li>
-                    <li><a href="#cgi.script_name#?tool=createuuids">UUIDs</a></li>
+                    <li><a href="#cgi.script_name#?tool=createUUIDs">UUIDs</a></li>
                     <cfif session.user.IsAdmin>
 
-                            <li><a href="index.cfm"></span>Edit Books</a></li>
+                            <li><a href="index.cfm">Edit Books</a></li>
                     </cfif>
                     <cfif session.isloggedin>
                         <li><a>Welcome #session.user.firstname#</a></li>
