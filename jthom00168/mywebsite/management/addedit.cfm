@@ -215,8 +215,7 @@
                         <input type="file" name="uploadimage" class="col-sm-6"/>
                         <input type="hidden" name="image" value="#trim(thisBook.image[1])#"/>
                         <cfif thisBook.image[1] neq ''>
-                            You should show this book #trim(thisBook.image[1])#
-                                <img  style="width:100px" src="/../images/#trim(thisBook.image[1])#" alt="">
+                                <img style="width:100px" src="../images/#trim(thisBook.image[1])#" alt="">
                         </cfif>
 
                     </div>

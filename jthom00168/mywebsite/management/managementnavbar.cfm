@@ -17,11 +17,12 @@
             <ul class="nav navbar-nav">
                 <cfoutput>
                     <li class="active"><a href="../index.cfm">Home</a></li>
-                    <li class="active"><a href="../#cgi.SCRIPT_NAME#?p=storeinfo">Store Info</a></li>
-                    <li class="active"><a href="../#cgi.SCRIPT_NAME#?p=stafffavorites">Staff Favorites</a></li>
+                    <li class="active"><a href="../index.cfm?p=storeinfo">Store Info</a></li>
+                    <li class="active"><a href="../index.cfm?p=stafffavorites">Staff Favorites</a></li>
                     <li class="active"><a href="../index.cfm?p=events">Events</a></li>
                     <li>
-                            <form class="navbar-form navbar-left" role="search" action="#cgi.SCRIPT_NAME#?p=details" method="post">
+                            <form class="navbar-form navbar-left" role="search" action="../index.cfm?p=details"
+                                  method="post">
                                 <div class="form-group">
                                     <input type="text" name="searchme" class="form-control" placeholder="Search">
                                 </div>
