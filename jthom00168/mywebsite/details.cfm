@@ -67,12 +67,43 @@
 
     <cfelseif searchme neq ''>
     <!--- Search comes from search box --->
+        <!---Look for books  that match--->
         <cfquery name="booksQuery" datasource="#application.dsource#">
             select * from Books
             inner join Publishers on Books.publisher = Publishers.publisher_ID
             where title like '%#trim(searchme)#%' or isbn13='#searchme#'
         </cfquery>
-        <cfset bookInfo.label="Keyword:#searchme#">
+        <cfif booksQuery.recordcount neq 0>
+            <cfset bookInfo.label="Keyword:#searchme#">
+        </cfif>
+
+        <!---Look for content that matches --->
+        <cfquery name="contentQuery" datasource="#application.dsource#">
+            select * from Article
+            where id like '%#trim(searchme)#%'
+        </cfquery>
+        <cfif contentQuery.recordcount neq 0>
+            <cflocation url="index.cfm?p=content&contentid=#searchme#"/>
+        </cfif>
+
+        <!---Look for genres that match--->
+
+        <!--- Get the id of the genre from the genre name --->
+        <cfquery name="whatGenre" datasource="#application.dsource#">
+            select * from Genres
+            where genrename like '%#trim(searchme)#%'
+        </cfquery>
+
+        <cfif whatGenre.recordcount neq 0>
+            <cfquery name="booksQuery" datasource="#application.dsource#">
+                select * from Books
+                inner join Publishers on Books.publisher = Publishers.publisher_ID
+                inner join GenresToBooks on Books.isbn13 = GenresToBooks.bookid
+                where genreid='#whatGenre.genreid#'
+            </cfquery>
+            <cfset bookInfo.label="Genre:#searchme#">
+
+        </cfif>
 
     <cfelseif publisher neq ''>
         <!--- Search comes from publisher --->
