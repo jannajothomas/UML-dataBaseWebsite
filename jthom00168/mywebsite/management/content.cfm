@@ -1,7 +1,7 @@
 <cftry>
     <!---  Case of no inputs --->
-    <cfparam name="article" default="">
-    <cfparam name="qterm" default="">
+    <cfparam name="articleId" default="">
+    <cfparam name="qTerm" default="">
 
     <!--  Process Forms -->
     <cfset processForms()>
@@ -11,7 +11,7 @@
     <cfoutput>#editContent()#</cfoutput>
     </div>
 
-    <div id="leftgutter" class="col-lg-3 col-lg-pull-9">
+    <div id="leftGutter" class="col-lg-3 col-lg-pull-9">
     <cfoutput>#sideContentNav()#</cfoutput>
     </div>
 
@@ -29,24 +29,25 @@
 <!-- ----------------------------------Edit Content------------------------------------------>
 <cffunction name="editContent">
     <!--Decide if an article should be shown -->
-    <cfif article neq ''>
+    <cfif articleId neq ''>
         <cfquery name="thisArticle" datasource="#application.dsource#">
-            select * from article where id='#thisArticle#'
+            select * from article where id='#articleId#'
         </cfquery>
         <cfoutput>
             <form action="#cgi.script_name#?tool=content" method="post" enctype="multipart/form-data" >
-                <input type="hidden" name="qterm" value="#qterm#" />
+                <input type="hidden" name="qterm" value="#qTerm#" />
 
                 <!--- Title --->
                 <div class="form-group row">
-                    <label for="title" class="col-sm-2 col-form-label"> Book Title </label>
+                    <label for="title" class="col-sm-2 col-form-label"> Article Title </label>
                     <div class="col-sm-10">
                         <input  type="text"
                                 class="form-control"
                                 id="title"
                                 name="title"
-                                placeholder="Book Title"
-                        value="#thisBook.title[1]#"/><br/>
+                                value="#thisArticle.Title[1]#"
+                                readonly
+                                /><br/>
                     </div>
                 </div>
 
@@ -55,7 +56,7 @@
                     <label for="bookDesc" class="col-sm-2 col-form-label" style="text-align: left">Description</label>
                     <div class="col-sm-10">
                         <textarea id="bookDesc" name="description">
-                            #trim(thisBook.description[1])#
+                            #trim(thisArticle.text[1])#
                         </textarea>
                         <script>
                             CKEDITOR.replace("bookDesc")
@@ -78,50 +79,33 @@
 <!--- -----------------------------------------------Side Nav --------------------------------->
 
 <cffunction name="sideContentNav">
-
-    <cftry>
-        <cfoutput>
-            <form action="#cgi.script_name#?tool=content" method="post" class="form-inline">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="qterm" name="qterm" value="#qterm#">
-                    <button type="submit" class="btn btn-xs btn-primary">Search</button>
-                </div>
-            </form>
-        </cfoutput>
-
-        <cfif qterm neq ''>
-            <cfquery name="allBooks" datasource="#application.dsource#">
-                select * from books
-                where title like '%#qterm#%'
-            order by title
+    <cfoutput>
+        <cftry>
+            <cfquery name="allContent" datasource="#application.dsource#">
+                select * from Article
+                order by title
             </cfquery>
-        </cfif>
 
-        <div>Content List</div>
-        <cfoutput>
+            <div>Content List</div>
             <ul class="nav flex-column">
-            <li class="nav-item">
-                    <a class="nav-link" href="#cgi.script_name#?tool=content&article=new">Add Content</a>
-        </li>
-            <cfif isdefined('allBooks')>
-                <cfloop query="allBooks">
-                        <li class="nav-item">
-                                <a class="nav-link" href="#cgi.script_name#?tool=content&book=#trim(isbn13)
-                            #&qterm=#qterm#">#trim(title)#
-                        </a>
-                        </li>
-                </cfloop>
-            <cfelse>
-                    No Search Term Entered (Try climb)
-            </cfif>
+                <cfif isdefined('allContent')>
+                    <cfloop query="allContent">
+                            <li class="nav-item">
+                                    <a class="nav-link"
+                                    href="#cgi.script_name#?tool=content&articleid=#trim(id)#&qterm=#qterm#">#trim
+                        (Title)#
+                            </a>
+                            </li>
+                    </cfloop>
+                <cfelse>
+                       No Content Found
+                </cfif>
             </ul>
-        </cfoutput>
             <cfcatch type="any">
                 <cfdump var="#cfcatch#">
             </cfcatch>
-
-    </cftry>
-
+        </cftry>
+    </cfoutput>
 </cffunction>
 
 <!-- ---------------------------------------- Process Forms ------------------------------>

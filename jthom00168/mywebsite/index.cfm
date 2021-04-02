@@ -19,13 +19,13 @@
             <div id="topHeader" class="row">
                 <cfinclude template="header.cfm">
             </div>
-<!---Debug only--->
-            <cfloop
+<!---Debug only
+           <cfloop
                     list="application,session,variables,client,url,form,request,server,cgi"
                     index="i">
                 <cfdump var=#evaluate(i)# label="#i#">
             </cfloop>
-<!---End Debug only--->
+End Debug only--->
 
             <!---Horizontal Nav--->
             <div id="horizontalnav" class="row">

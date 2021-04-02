@@ -13,11 +13,11 @@
         </a>
     </div>
 
-    <div class="collapse navbar-collapse" id="myNav">
+    <div class="collapse navbar-collapse navbar-left" id="myNav">
         <ul class="nav navbar-nav">
             <cfoutput>
                 <li class="active"><a href="index.cfm">Home</a></li>
-                <li class="active"><a href="#cgi.SCRIPT_NAME#?p=storeinfo">Store Information</a></li>
+                <li class="active"><a href="#cgi.SCRIPT_NAME#?p=storeinfo">Store Info</a></li>
                 <li class="active"><a href="#cgi.SCRIPT_NAME#?p=staffFavorites">Staff Favorites</a></li>
                 <li class="active"><a href="#cgi.SCRIPT_NAME#?p=events">Events</a></li>
                 <li>
