@@ -39,8 +39,8 @@
             <cfoutput>
                 <cfif session.isloggedin>
                     <cfif session.user.IsAdmin>
-                            <li><a href="/jthom00168/mywebsite/management/index.cfm">Add/Edit</a></li>
-                            <li><a href="/jthom00168/mywebsite/management/index.cfm?tool=content">Edit Content</a></li>
+                            <li><a href="/jthom00168/mywebsite/management/index.cfm">Books</a></li>
+                            <li><a href="/jthom00168/mywebsite/management/index.cfm?tool=content">Content</a></li>
                             <li><a href="/jthom00168/mywebsite/management/index.cfm?tool=createuuids">UUIDs</a></li>
                     </cfif>
                     <li><a>Welcome #session.user.firstname#</a></li>

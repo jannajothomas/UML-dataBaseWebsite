@@ -1,4 +1,3 @@
-
 <legend>Featured Books</legend>
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!--- Indicators --->

@@ -111,6 +111,7 @@
                     <div class="col-sm-10">
                         <!--Loop over teh allgenres query-->
                             <cfloop query="allgenres">
+                                <label for="Genre#genreid#" class="sr-only">"Genre#genreid#"</label>
                                 <input  type="checkbox"
                                         class="form-control"
                                         id="Genre#genreid#"
@@ -260,6 +261,7 @@
             </li>
             <form action="#cgi.script_name#?tool=addedit" method="post" class="form-inline">
                 <div class="form-group">
+                    <label for="qterm" class="sr-only">"#qterm#"</label>
                     <input type="text" class="form-control" id="qterm" name="qterm" value="#qterm#">
                     <button type="submit" class="btn btn-xs btn-primary">Search</button>
                 </div>
