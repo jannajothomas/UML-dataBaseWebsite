@@ -36,7 +36,15 @@
             <img src="images/#bookInfo.image[1]#" style="float:right; width:200px;
                 height:250px;">
             <span><h2><strong></strong>#bookInfo.title[1]#</h2></span>
-            <span><h4><strong>Author: </strong>#getAuthor.firstName[1]# #getAuthor.lastName[1]#</h4></span>
+
+            <span><h4><strong>By: </strong>
+                <cfloop query = "getAuthor">
+                    <cfoutput>#firstName# #lastName# </cfoutput>
+                    <cfif getAuthor.currentrow lt getAuthor.recordcount >
+                        ,
+                    </cfif>
+                </cfloop>
+            </h4></span>
             <span><h4><strong>Publisher: </strong>#bookInfo.name[1]#</h4></span>
             <span><h4><strong>Year Published: </strong>#bookInfo.year[1]#</h4></span>
             <span><h4><strong>Description: </strong>#bookInfo.description[1]#</h4></span>
