@@ -137,8 +137,55 @@
 
         <!---Start test code--->
         <!---Get the id of the auth--->
+        Searchterm = <cfoutput>#trim(searchme)#</cfoutput> </br>
+        <cfquery name="whatAuthor" datasource="#application.dsource#">
+            select * from Person
+            where id like '%#trim(searchme)#%'
+        </cfquery>
+
+        <cfquery name="booksQuery" datasource="#application.dsource#">
+            select * from Person
+            inner join PersonToRole on Person.id = PersonToRole.personid
+            inner join Books on PersonToRole.bookid = Books.ISBN13
+            where Person.id='#searchme#'
+        </cfquery>
+
+       <!--- It looks like this author has  <cfoutput>#thisAuthorsBooks.recordcount#</cfoutput> books<br/>--->
+
+    <!---<cfoutput>#getAuthor.id#</cfoutput>
+    <cfloop query = "thisAuthorsBooks">
+        book: <cfoutput>#thisAuthorsBooks.title#</cfoutput> <br/>
+    </cfloop>--->
+<!---End test code--->
 
 
+
+
+
+
+
+
+
+
+        <cfif #whatAuthor.recordcount# neq 0>
+            Recordcount was not zero.  This means the author was found in the db <br/>
+            <!---<cfquery name="booksQuery" datasource="#application.dsource#">--->
+
+<!---
+             select * from Books
+             inner join PersonToRole on Books.ISBN13 = PersonToRole.bookid
+             inner join Person on PersonToRole.personid = Person.id
+             where Books.ISBN13='#Bookinfo.ISBN13#'
+
+
+             select * from Books
+             inner join PersonToRole on Books.ISBN13 = PersonToRole.bookid
+             inner join Person on PersonToRole.personid = PersonToRole.bookid
+             where personid='#whatAuthor.id#'
+            </cfquery>--->
+            bookquery size was <cfoutput>#whatAuthor.recordcount#</cfoutput>
+            <cfset bookInfo.label="Author: #whatAuthor.firstName#">
+        </cfif>
         <!---end test code--->
 
     <cfelseif publisher neq ''>
