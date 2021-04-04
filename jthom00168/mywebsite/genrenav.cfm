@@ -1,5 +1,3 @@
-
-
 <cfquery name="allgenres" datasource="#application.dsource#">
     select distinct Genres.genreid,Genres.genrename from GenresToBooks
     inner join Genres on Genres.genreid = GenresToBooks.genreid

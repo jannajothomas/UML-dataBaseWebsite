@@ -1,10 +1,10 @@
 <!---  Case of no inputs --->
 <cfparam name="thisId" default="">
 
-<!--  Process Forms -->
+<!---  Process Forms --->
 <cfset processForms()>
 
-<!--  Display Data -->
+<!---  Display Data --->
 <div id="main" class="col-lg-9 col-lg-push-3">
     <cfoutput>#editContent()#</cfoutput>
 </div>
@@ -18,7 +18,7 @@
     <cflocation url = "../index.cfm">
 </cfif>
 
-<!--- ----------------------------------Edit Content------------------------------------------>
+<!-------------------------------------Edit Content------------------------------------------>
 
 <cffunction name="editContent">
     <cfoutput>
@@ -32,7 +32,6 @@
             <form action="#cgi.script_name#?tool=content" method="post" enctype="multipart/form-data" >
                 <input type="hidden" name="contentForm" value="#editArticle.id[1]#" />
 
-
                 <cfif thisId neq 'new'>
                 <!--- UUID --->
                         <div class="form-group row">
@@ -44,12 +43,10 @@
                                         name="id"
                                 value="#editArticle.id[1]#"
                                         readonly
-
                     /><br/>
                     </div>
                     </div>
                 </cfif>
-
 
                     <!--- Title --->
                     <div class="form-group row">
@@ -70,8 +67,6 @@
                                             value="#editArticle.Title[1]#"
                                 />
                             </cfif>
-
-
                             <br/>
                         </div>
                     </div>
@@ -96,13 +91,12 @@
                     </div>
                 </div>
             </form>
-
     </cfif>
 </cfoutput>
 </cffunction>
 
 
-<!--- -----------------------------------------------Side Nav --------------------------------->
+<!--------------------------------------------------Side Nav --------------------------------->
 
 <cffunction name="sideContentNav">
     <cfoutput>
@@ -138,7 +132,7 @@
     </cfoutput>
 </cffunction>
 
-<!-- ---------------------------------------- Process Forms ------------------------------>
+<!------------------------------------------ Process Forms ------------------------------>
 <cffunction name="processForms">
     <cfoutput>
         <cfif isdefined('form.id')>

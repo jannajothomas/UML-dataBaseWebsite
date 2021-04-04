@@ -7,7 +7,7 @@
 
 <!---Display view based on number of results--->
 <cfoutput>
-    <!---<legend>#bookInfo.label#</legend>--->
+    <legend>#bookInfo.label#</legend>
     <cfif bookinfo.booksQuery.recordcount eq 0> #noResults()#
         <cfelseif bookInfo.booksQuery.recordcount eq 1>
             #oneResult(bookInfo.booksQuery)#
@@ -176,9 +176,7 @@
             </cfquery>
             <cfset bookInfo.label="Author: #whatAuthorid.firstName# or #whatAuthorid.lastName#">
         </cfif>
-
     </cfif>
-
     <cfset bookInfo.booksQuery=booksquery>
     <cfreturn bookInfo>
 </cffunction>

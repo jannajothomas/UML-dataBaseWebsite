@@ -1,13 +1,13 @@
 <cftry>
-    <!--  Case of no inputs -->
+    <!---  Case of no inputs --->
     <cfparam name="book" default="">
     <cfparam name="qterm" default="">
     <cfparam name="allowISBNEdit" default="">
 
-    <!--  Process Forms -->
+    <!---  Process Forms --->
     <cfset processForms()>
 
-    <!--  Display Data -->
+    <!---  Display Data --->
     <div id="main" class="col-lg-9 col-lg-push-3">
         <cfoutput>#mainForm()#</cfoutput>
     </div>
@@ -27,10 +27,9 @@
             url = "../index.cfm">
 </cfif>
 
-
-<!-- ----------------------------------Main Form------------------------------------------>
+<!------------------------------------Main Form------------------------------------------>
 <cffunction name="mainForm">
-    <!--Decide if a book should be shown -->
+    <!---Decide if a book should be shown --->
     <cfif book neq ''>
 
         <!---Select all the genres in Genres and order them by genre name--->
@@ -38,14 +37,11 @@
             select * from Genres order by 'genrename'
         </cfquery>
 
-
-        <!-- Query: bookgenres : Selects all of the rows in GenresToBooks where bookid is the same as the
-        book that was submitted-->
+        <!---Selects all of the rows in GenresToBooks where bookid is the same as the
+        book that was submitted--->
         <cfquery name="bookgenres" datasource="#application.dsource#">
             select * from GenresToBooks where bookid='#book#'
         </cfquery>
-
-
 
         <cfquery name="thisBook" datasource="#application.dsource#">
             select * from books where isbn13='#book#'
@@ -77,7 +73,6 @@
                                     value="#thisBook.isbn13[1]#"
                                 />
                     <cfelse>
-                        cfelse
                             <input type="text"
                                    class="form-control"
                                    id="isbn13"
@@ -109,7 +104,7 @@
                 <div class="form-group row">
                     <label for="title" class="col-sm-2 col-form-label"> Genres </label>
                     <div class="col-sm-10">
-                        <!--Loop over teh allgenres query-->
+                        <!---Loop over teh allgenres query--->
                             <cfloop query="allgenres">
                                 <label for="Genre#genreid#" class="sr-only">"Genre#genreid#"</label>
                                 <input  type="checkbox"
@@ -120,7 +115,7 @@
                                         value="#genreid#"
                                 />#genrename#<br/>
                             </cfloop>
-                        <!--Loop over the bookgenres query-->
+                        <!---Loop over the bookgenres query--->
                         <cfloop query="bookgenres">
                             <script>document.getElementById('Genre#genreid#').checked=true;</script>
                         </cfloop>
@@ -252,7 +247,7 @@
     </cfif>
 </cffunction>
 
-<!-- -----------------------------------------------Side Nav --------------------------------->
+<!-------------------------------------------------Side Nav --------------------------------->
 <cffunction name="sideNav">
     <cfoutput>
         <ul class="nav flex-column">
@@ -274,7 +269,6 @@
                     order by title
                 </cfquery>
             </cfif>
-
 
                 <cfif isdefined('allBooks')>
                     <div>Search Results</div>
@@ -306,11 +300,10 @@
                     </li>
                 </cfloop>
             </ul>
-
     </cfoutput>
 </cffunction>
 
-<!-- ---------------------------------------- Process Forms ------------------------------>
+<!------------------------------------------ Process Forms ------------------------------>
 <cffunction name="processForms">
     <cfoutput>
         <cfif isdefined('form.isbn13')>
