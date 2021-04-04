@@ -2,16 +2,17 @@
 <cfparam name="genre" default="">
 <cfparam name="publisher" default="">
 <cfparam name="booksQuery" default="">
+
 <cfset bookInfo=makeQuery()>
-
-
 
 <!---Display view based on number of results--->
 <cfoutput>
-    <legend>#bookInfo.label#</legend>
+    <!---<legend>#bookInfo.label#</legend>--->
     <cfif bookinfo.booksQuery.recordcount eq 0> #noResults()#
-        <cfelseif bookInfo.booksQuery.recordcount eq 1> #oneResult(bookInfo.booksQuery)#
-        <cfelse> #manyResults(bookInfo.booksQuery)#
+        <cfelseif bookInfo.booksQuery.recordcount eq 1>
+            #oneResult(bookInfo.booksQuery)#
+        <cfelse>
+            #manyResults(bookInfo.booksQuery)#
     </cfif>
 </cfoutput>
 
@@ -27,7 +28,7 @@
     <cfquery name="getAuthor" datasource="#application.dsource#">
         select * from Books
             inner join PersonToRole on Books.ISBN13 = PersonToRole.bookid
-            inner join Person on Person.id = PersonToRole.personid
+            inner join Person on PersonToRole.personid = Person.id
         where Books.ISBN13='#Bookinfo.ISBN13#'
     </cfquery>
 
@@ -39,7 +40,22 @@
 
             <span><h4><strong>By: </strong>
                 <cfloop query = "getAuthor">
-                    <cfoutput>#firstName# #lastName# </cfoutput>
+                    <!---Begin test code--->
+                    <cfquery name="thisAuthorsBooks" datasource="#application.dsource#">
+                        select * from Person
+                            inner join PersonToRole on Person.id = PersonToRole.personid
+                            inner join Books on PersonToRole.bookid = Books.ISBN13
+                        where Person.id='#getAuthor.id#'
+                    </cfquery>
+                    It looks like this author has  <cfoutput>#thisAuthorsBooks.recordcount#</cfoutput> books <br/>
+
+                    <!---<cfoutput>#getAuthor.id#</cfoutput>--->
+                    <cfloop query = "thisAuthorsBooks">
+                        book: <cfoutput>#thisAuthorsBooks.title#</cfoutput> <br/>
+                    </cfloop>
+                    <!---End test code--->
+                        <cfoutput>#firstName# #lastName# </cfoutput>
+
                     <cfif getAuthor.currentrow lt getAuthor.recordcount >
                         ,
                     </cfif>
