@@ -44,7 +44,7 @@
                             <li><a href="/jthom00168/mywebsite/management/index.cfm?tool=createuuids">UUIDs</a></li>
                     </cfif>
                     <li><a>Welcome #session.user.firstname#</a></li>
-                <li><a href="#cgi.SCRIPT_NAME#?p=logoff ">logout</a></li>
+                <li><a href="/jthom00168/mywebsite/index.cfm?p=logoff ">logout</a></li>
                 <cfelse>
                         <li><a href="#cgi.SCRIPT_NAME#?p=login">
                         <span class="glyphicon glyphicon-log-in"></span>
