@@ -33,7 +33,7 @@
     <!--Decide if a book should be shown -->
     <cfif book neq ''>
 
-        <!-- Query: allgenres : Select all the genres in Genres and order them by genre name-->
+        <!---Select all the genres in Genres and order them by genre name--->
         <cfquery name="allgenres" datasource="#application.dsource#">
             select * from Genres order by 'genrename'
         </cfquery>

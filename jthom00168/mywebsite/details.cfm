@@ -48,9 +48,9 @@
                     </cfquery>
 
                     <cfif #thisAuthorsBooks.recordcount# gt 1>
-                        <a href="index.cfm?p=details&searchme=#id#"> #firstName# #lastName# </a>
+                        <a href="index.cfm?p=details&searchme=#id#">#firstName# #lastName# </a>
                         <cfelse>
-                        <cfoutput>#firstName# #lastName# </cfoutput>
+                        <cfoutput>#firstName# #lastName#</cfoutput>
                     </cfif>
 
                     <cfif getAuthor.currentrow lt getAuthor.recordcount >
@@ -80,8 +80,9 @@
 <cffunction name="makeQuery">
     <cfset bookInfo={booksQuery:queryNew("title")}>
 
+    <!---Search comes from Genre id--->
     <cfif genre neq ''>
-    <!---Search comes from Genre--->
+        <!---Get the genre name--->
         <cfquery name="whatGenre" datasource="#application.dsource#">
             select * from Genres where genreid='#genre#'
         </cfquery>
@@ -95,36 +96,52 @@
         </cfquery>
         <cfset bookInfo.label="Genre:#whatGenre.genrename[1]#">
 
-
-    <cfelseif searchme neq ''>
     <!--- Search comes from search box --->
-        <!---Look for books  that match--->
+    <cfelseif searchme neq ''>
+
+        <!---Look for content that matches.  --->
+        <cfquery name="contentQuery" datasource="#application.dsource#">
+            select * from Article
+            where id like '%#trim(searchme)#%'
+        </cfquery>
+
+        <!---Look for books that match--->
         <cfquery name="booksQuery" datasource="#application.dsource#">
             select * from Books
             inner join Publishers on Books.publisher = Publishers.publisher_ID
             where title like '%#trim(searchme)#%' or isbn13='#searchme#'
         </cfquery>
-        <cfif booksQuery.recordcount neq 0>
-            <cfset bookInfo.label="Keyword:#searchme#">
-        </cfif>
 
-        <!---Look for content that matches --->
-        <cfquery name="contentQuery" datasource="#application.dsource#">
-            select * from Article
-            where id like '%#trim(searchme)#%'
-        </cfquery>
-        <cfif contentQuery.recordcount neq 0>
-            <cflocation url="index.cfm?p=content&contentid=#searchme#"/>
-        </cfif>
-
-        <!---Look for genres that match--->
-
-        <!--- Get the id of the genre from the genre name --->
+        <!--- Look for genre name that matches --->
         <cfquery name="whatGenre" datasource="#application.dsource#">
             select * from Genres
             where genrename like '%#trim(searchme)#%'
         </cfquery>
 
+        <!--- Look for author id that matches--->
+        <cfquery name="whatAuthorid" datasource="#application.dsource#">
+            select * from Person
+            where id like '%#trim(searchme)#%'
+        </cfquery>
+
+        <!--- Look for author first name that matches--->
+        <cfquery name="whatAuthorname" datasource="#application.dsource#">
+            select * from Person
+            where '#searchme#' LIKE CONCAT('%',firstName, '%')
+            or '#searchme#' LIKE CONCAT('%',lastName, '%')
+        </cfquery>
+
+        <!---Search was for content UUID.  Redirect search output to content page --->
+        <cfif contentQuery.recordcount neq 0>
+            <cflocation url="index.cfm?p=content&contentid=#searchme#"/>
+        </cfif>
+
+        <!---Seach was for book Title--->
+        <cfif booksQuery.recordcount neq 0>
+            <cfset bookInfo.label="Keyword:#searchme#">
+        </cfif>
+
+        <!---Search was for genre name--->
         <cfif whatGenre.recordcount neq 0>
             <cfquery name="booksQuery" datasource="#application.dsource#">
                 select * from Books
@@ -135,67 +152,31 @@
             <cfset bookInfo.label="Genre:#searchme#">
         </cfif>
 
-        <!---Start test code--->
-        <!---Get the id of the auth--->
-        Searchterm = <cfoutput>#trim(searchme)#</cfoutput> </br>
-        <cfquery name="whatAuthor" datasource="#application.dsource#">
-            select * from Person
-            where id like '%#trim(searchme)#%'
-        </cfquery>
-
-        <cfquery name="booksQuery" datasource="#application.dsource#">
-            select * from Person
-            inner join PersonToRole on Person.id = PersonToRole.personid
-            inner join Books on PersonToRole.bookid = Books.ISBN13
-            where Person.id='#searchme#'
-        </cfquery>
-
-       <!--- It looks like this author has  <cfoutput>#thisAuthorsBooks.recordcount#</cfoutput> books<br/>--->
-
-    <!---<cfoutput>#getAuthor.id#</cfoutput>
-    <cfloop query = "thisAuthorsBooks">
-        book: <cfoutput>#thisAuthorsBooks.title#</cfoutput> <br/>
-    </cfloop>--->
-<!---End test code--->
-
-
-
-
-
-
-
-
-
-
-        <cfif #whatAuthor.recordcount# neq 0>
-            Recordcount was not zero.  This means the author was found in the db <br/>
-            <!---<cfquery name="booksQuery" datasource="#application.dsource#">--->
-
-<!---
-             select * from Books
-             inner join PersonToRole on Books.ISBN13 = PersonToRole.bookid
-             inner join Person on PersonToRole.personid = Person.id
-             where Books.ISBN13='#Bookinfo.ISBN13#'
-
-
-             select * from Books
-             inner join PersonToRole on Books.ISBN13 = PersonToRole.bookid
-             inner join Person on PersonToRole.personid = PersonToRole.bookid
-             where personid='#whatAuthor.id#'
-            </cfquery>--->
-            bookquery size was <cfoutput>#whatAuthor.recordcount#</cfoutput>
-            <cfset bookInfo.label="Author: #whatAuthor.firstName#">
-        </cfif>
-        <!---end test code--->
-
-    <cfelseif publisher neq ''>
-        <!--- Search comes from publisher --->
+        <!---Search was for authorid--->
+        <cfif #whatAuthorid.recordcount# neq 0>
             <cfquery name="booksQuery" datasource="#application.dsource#">
-                select * from books
+                select * from Person
+                inner join PersonToRole on Person.id = PersonToRole.personid
+                inner join Books on PersonToRole.bookid = Books.ISBN13
                 inner join Publishers on Books.publisher = Publishers.publisher_ID
-                where Publishers.publisher_ID ='#publisher#'
+                where Person.id='#searchme#'
             </cfquery>
-        <cfset bookInfo.label="Publisher:#booksQuery.name#">
+            <cfset bookInfo.label="Author: #whatAuthorid.firstName# #whatAuthorid.lastName#">
+        </cfif>
+
+        <!---Search was for author name--->
+        <cfif #whatAuthorname.recordcount# neq 0>
+            <cfquery name="booksQuery" datasource="#application.dsource#">
+                select * from Person
+                inner join PersonToRole on Person.id = PersonToRole.personid
+                inner join Books on PersonToRole.bookid = Books.ISBN13
+                inner join Publishers on Books.publisher = Publishers.publisher_ID
+                where '#searchme#' LIKE CONCAT('%', firstName, '%')
+                or '#searchme#' LIKE CONCAT('%', lastName, '%')
+            </cfquery>
+            <cfset bookInfo.label="Author: #whatAuthorid.firstName# or #whatAuthorid.lastName#">
+        </cfif>
+
     </cfif>
 
     <cfset bookInfo.booksQuery=booksquery>
