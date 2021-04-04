@@ -40,27 +40,18 @@
 
             <span><h4><strong>By: </strong>
                 <cfloop query = "getAuthor">
-                    <!---Begin test code--->
                     <cfquery name="thisAuthorsBooks" datasource="#application.dsource#">
                         select * from Person
                             inner join PersonToRole on Person.id = PersonToRole.personid
                             inner join Books on PersonToRole.bookid = Books.ISBN13
                         where Person.id='#getAuthor.id#'
                     </cfquery>
-                   <!--- It looks like this author has  <cfoutput>#thisAuthorsBooks.recordcount#</cfoutput> books
-                   <br/>--->
 
-                    <!---<cfoutput>#getAuthor.id#</cfoutput>
-                    <cfloop query = "thisAuthorsBooks">
-                        book: <cfoutput>#thisAuthorsBooks.title#</cfoutput> <br/>
-                    </cfloop>
-                    End test code--->
                     <cfif #thisAuthorsBooks.recordcount# gt 1>
-                        <a href="index.cfm?details=#firstname# #lastname#">#firstName# #lastName#  </a>
+                        <a href="index.cfm?p=details&searchme=#id#"> #firstName# #lastName# </a>
                         <cfelse>
                         <cfoutput>#firstName# #lastName# </cfoutput>
                     </cfif>
-
 
                     <cfif getAuthor.currentrow lt getAuthor.recordcount >
                         ,
@@ -142,8 +133,13 @@
                 where genreid='#whatGenre.genreid#'
             </cfquery>
             <cfset bookInfo.label="Genre:#searchme#">
-
         </cfif>
+
+        <!---Start test code--->
+        <!---Get the id of the auth--->
+
+
+        <!---end test code--->
 
     <cfelseif publisher neq ''>
         <!--- Search comes from publisher --->
